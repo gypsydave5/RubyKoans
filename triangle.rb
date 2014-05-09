@@ -14,7 +14,9 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  tri = [a,b,c].uniq
+  return :scalene if tri.length == 3
+  tri.length == 2 ? :isosceles : :equilateral
 end
 
 # Error class used in part 2.  No need to change this code.
