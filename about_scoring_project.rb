@@ -31,7 +31,43 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  score = 0
+  dice.sort!
+  working = []
+  while dice.any?
+    working.push(dice.pop) if working.empty?
+    while working.last == dice.last
+      working.push(dice.pop)
+    end
+    if working.last == 1
+      while working.size > 2
+        score += 1000
+        working.pop(3)
+      end
+      while working.any?
+        score += 100
+        working.pop
+      end
+    end
+    if working.last == 5
+      while working.size > 2
+        score += 500
+        working.pop(3)
+      end
+      while working.any?
+        score += 50
+        working.pop
+      end
+    end
+    while working.size > 2
+      score += working.last * 100
+      working.pop(3)
+    end
+    working.clear
+  end
+  score
 end
+
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
