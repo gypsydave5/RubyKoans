@@ -29,41 +29,65 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+# def score(dice)
+#   # You need to write this method
+#   score = 0
+#   dice.sort!
+#   working = []
+#   while dice.any?
+#     working.push(dice.pop) if working.empty?
+#     while working.last == dice.last
+#       working.push(dice.pop)
+#     end
+#     if working.last == 1
+#       while working.size > 2
+#         score += 1000
+#         working.pop(3)
+#       end
+#       while working.any?
+#         score += 100
+#         working.pop
+#       end
+#     end
+#     if working.last == 5
+#       while working.size > 2
+#         score += 500
+#         working.pop(3)
+#       end
+#       while working.any?
+#         score += 50
+#         working.pop
+#       end
+#     end
+#     while working.size > 2
+#       score += working.last * 100
+#       working.pop(3)
+#     end
+#     working.clear
+#   end
+#   score
+# end
+
 def score(dice)
-  # You need to write this method
+  return 0 if dice.empty?
+  score_count = Hash.new(0)
+  dice.map do |x|
+    score_count[x] += 1
+  end
   score = 0
-  dice.sort!
-  working = []
-  while dice.any?
-    working.push(dice.pop) if working.empty?
-    while working.last == dice.last
-      working.push(dice.pop)
-    end
-    if working.last == 1
-      while working.size > 2
-        score += 1000
-        working.pop(3)
+  score_count.each do |key, value|
+    if key == 1
+      while value > 2
+        score += 1000; value -=3
       end
-      while working.any?
-        score += 100
-        working.pop
-      end
+      score += value * 100
     end
-    if working.last == 5
-      while working.size > 2
-        score += 500
-        working.pop(3)
-      end
-      while working.any?
-        score += 50
-        working.pop
-      end
+    while value > 2
+      score += key * 100; value -= 3
     end
-    while working.size > 2
-      score += working.last * 100
-      working.pop(3)
+    if key == 5
+      score += value * 50
     end
-    working.clear
   end
   score
 end
